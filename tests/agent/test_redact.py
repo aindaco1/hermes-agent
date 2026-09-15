@@ -17,6 +17,15 @@ def _ensure_redaction_enabled(monkeypatch):
 
 
 class TestKnownPrefixes:
+    def test_stateless_github_tokens_use_one_nonreusable_file_redaction(self):
+        for size in (128, 256):
+            token = "_".join(("ghs", "12345", ".".join(("eyJ" + "a" * 30, "b_c-" * size, "d_e-" * 20))))
+            result = redact_sensitive_text(f"before {token} after", force=True, file_read=True)
+            assert result.startswith("before «redacted:ghs_")
+            assert result.endswith("» after")
+            assert "ghs_12345_" not in result
+            assert "b_c-" not in result and "d_e-" not in result
+
 
 
 

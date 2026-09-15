@@ -48,9 +48,12 @@ def test_redact_replaces_secret_by_key_name():
 
 def test_redact_handles_github_token_pattern():
     mod = _load()
-    out = mod.redact_migration_value({"detail": "token: ghp_1234567890abcdef1234"})
-    assert "ghp_" not in out["detail"]
-    assert mod.REDACTED_MIGRATION_VALUE in out["detail"]
+    tokens = ["_".join(("ghp", "a" * 36)), "_".join(("ghs", "a" * 36))]
+    tokens.extend("_".join(("ghs", "12345", ".".join(("eyJ" + "a" * 30, "b_c-" * n, "d_e-" * 20)))) for n in (128, 256))
+    for token in tokens:
+        out = mod.redact_migration_value({"detail": f"before {token} after"})
+        assert out["detail"] == f"before {mod.REDACTED_MIGRATION_VALUE} after"
+
 
 
 

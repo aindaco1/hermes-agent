@@ -1056,7 +1056,7 @@ def _collect_paths_from_jsonish(obj: Any, relevant_files: list[str]) -> None:
 def _compact_fallback_turn(value: Any) -> str:
     """One-line, redacted, length-capped rendering of a turn's content for the static fallback."""
     text = _redact_compaction_text(_content_text_for_contains(value))
-    text = re.sub(r"\bgh[pousr]_[A-Za-z0-9_]{8,}\b", "[REDACTED]", text)
+    text = re.sub(r"\bgh[pousr]_[A-Za-z0-9_.-]{8,}", "[REDACTED]", text)
     text = re.sub(r"\s+", " ", text).strip()
     if len(text) > _FALLBACK_TURN_MAX_CHARS:
         text = text[: _FALLBACK_TURN_MAX_CHARS - 15].rstrip() + " ...[truncated]"

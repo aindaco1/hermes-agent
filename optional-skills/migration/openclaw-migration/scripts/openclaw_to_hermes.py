@@ -710,7 +710,7 @@ _SECRET_KEY_MARKERS = (
 _SECRET_VALUE_PATTERNS = (
     re.compile(r"\bBearer\s+[A-Za-z0-9._~+/=\-]+"),
     re.compile(r"\bsk-[A-Za-z0-9_\-]{8,}\b"),
-    re.compile(r"\bgh[pousr]_[A-Za-z0-9_]{16,}\b"),
+    re.compile(r"\b(?:ghs_[A-Za-z0-9._-]{16,}|gh[pour]_[A-Za-z0-9_]{16,}\b)"),
     re.compile(r"\bxox[abprs]-[A-Za-z0-9\-]{8,}\b"),
     re.compile(r"\bAIza[0-9A-Za-z_\-]{12,}\b"),
 )
